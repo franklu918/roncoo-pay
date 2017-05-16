@@ -49,21 +49,16 @@
 			<version>1.2.5</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>alipay</groupId>
-			<artifactId>sdk</artifactId>
-			<version>java20151021120052</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/lib/alipay-sdk-java20151021120052.jar</systemPath>
+			<artifactId>alipay-sdk-java20151021120052</artifactId>
+			<version>1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>alipay</groupId>
-			<artifactId>trade</artifactId>
-			<version>sdk</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/lib/alipay-trade-sdk.jar</systemPath>
+			<artifactId>alipay-trade-sdk</artifactId>
+			<version>1.0</version>
 		</dependency>
 
 	</dependencies>
