@@ -81,9 +81,10 @@ public class AccountController extends BaseController {
 		RpAccount rpAccount = rpAccountService.getDataByUserNo(userNo);
 		RpUserPayConfig rpUserPayConfig = rpUserPayConfigService.getByUserNo(userNo);
 		List<RpPayWay> rpPayWayList = new ArrayList<RpPayWay>(); 
-    	if(rpUserPayConfig != null){
+		if(rpUserPayConfig != null){
 			rpPayWayList = rpPayWayService.listByProductCode(rpUserPayConfig.getProductCode());
 		}
+		
 		
 		request.setAttribute("rpAccount", rpAccount);
 		request.setAttribute("rpUserPayConfig", rpUserPayConfig);
@@ -130,4 +131,20 @@ public class AccountController extends BaseController {
 				return new ApiCommonResultVo(0, "操作成功", "");
 			}
 	    }  
+	   
+		@RequestMapping(value = "/savePayPass", method = { RequestMethod.POST, RequestMethod.GET })
+		@ResponseBody
+		public ApiCommonResultVo savePayPass(HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
+			RpUserInfo rpUserInfo = (RpUserInfo) request.getSession().getAttribute(ConstantClass.USER);
+			String oldPayPass = request.getParameter("oldPayPass");
+			String newPayPass = request.getParameter("newPayPass");
+			if (!EncryptUtil.encodeMD5String(oldPayPass).equals(rpUserInfo.getPayPwd())) {
+				return new ApiCommonResultVo(-1, "操作失败，原支付密码错误", "");
+			} else {
+				rpUserInfo.setPayPwd(EncryptUtil.encodeMD5String(newPayPass));
+				rpUserInfoService.updateData(rpUserInfo);
+				request.getSession().setAttribute(ConstantClass.USER, rpUserInfo);
+				return new ApiCommonResultVo(0, "操作成功", "");
+			}
+		}
 }
