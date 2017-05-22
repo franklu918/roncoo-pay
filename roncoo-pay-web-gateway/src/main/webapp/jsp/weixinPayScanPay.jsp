@@ -135,6 +135,7 @@
               render: "table",
               width: 190,
               height:190,
+              correctLevel:0,
               text: str
           });
       })
